@@ -1,65 +1,76 @@
-
 # ImageAdjuster
 
-## Project Overview
+ImageAdjuster is a small Python CLI that resizes images, converts between JPG and PNG, and searches for an output quality that lands inside a target file-size range.
 
-ImageAdjuster is a Python tool designed to adjust images according to user-defined specifications. It allows users to resize images, change their format, and adjust the compression quality to meet various requirements. This project utilizes the Pillow library for image processing tasks.
+## What It Does
 
-## Features
+- Upscales images that are smaller than your minimum width or height requirements
+- Converts output to `jpg` or `png`
+- Iterates over quality settings to try to fit the output into a desired size window
+- Writes the adjusted image next to the original file with an `_adjusted` suffix
 
-- **Resize Images:** Change the dimensions of an image to specified width and height.
-- **Format Conversion:** Convert images to different formats (e.g., JPEG, PNG).
-- **Quality Adjustment:** Modify the compression quality of images, useful for reducing file size.
+## Tech Stack
+
+- Python
+- Pillow
 
 ## Installation
 
-### Prerequisites
-
-- Python 3.6 or higher
-- pip (Python package installer)
-
-### Setup
-
-1. **Clone the Repository:**
-
 ```bash
-git clone https://github.com/yourusername/ImageAdjuster.git
+git clone https://github.com/ShanedevPro/ImageAdjuster.git
 cd ImageAdjuster
-```
-
-2. **Install Dependencies:**
-
-```bash
 pip install -r requirements.txt
 ```
 
-## Usage
-
-To use ImageAdjuster, run the `adjust_image.py` script with the desired parameters. Below are some examples of common operations.
-
-### Resize an Image
+## Quick Start
 
 ```bash
-python adjust_image.py --path /path/to/image.jpg --width 800 --height 600
+python adjust_image.py ./input/photo.png
 ```
 
-### Convert Image Format
+This uses the default rules:
+
+- minimum width: `360`
+- minimum height: `480`
+- output format: `jpg`
+- file size target: `20 KB` to `200 KB`
+
+## Examples
+
+### Resize and convert to JPG
 
 ```bash
-python adjust_image.py --path /path/to/image.png --format JPEG
+python adjust_image.py ./input/photo.png --width 800 --height 600 --format jpg
 ```
 
-### Adjust Image Quality
+### Keep PNG output and narrow the file-size window
 
 ```bash
-python adjust_image.py --path /path/to/image.jpg --quality 85
+python adjust_image.py ./input/photo.png --format png --min_size 80 --max_size 120
 ```
 
-## Contributing
+## Current Limitations
 
-Contributions to ImageAdjuster are welcome! If you're interested in helping improve this tool, please take a look at our [CONTRIBUTING.md](CONTRIBUTING.md) file for guidelines on how to submit issues, feature requests, and pull requests.
+- The tool increases image size when the source image is smaller than the target minimum resolution.
+- It only supports `jpg` and `png` outputs.
+- If no quality setting can satisfy the requested size range, the script prints a warning instead of forcing an output.
+
+## Output Behavior
+
+If the input file is `photo.png`, the adjusted file is written as:
+
+```text
+photo_adjusted.jpg
+```
+
+or
+
+```text
+photo_adjusted.png
+```
+
+depending on the selected output format.
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
+MIT
