@@ -71,6 +71,10 @@ photo_adjusted.png
 
 depending on the selected output format.
 
+## Public Review Note
+
+- Public privacy reviews should verify that no API keys, access tokens, private image samples, or local machine paths have been committed.
+
 ## License
 
 MIT
